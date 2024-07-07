@@ -18,33 +18,35 @@ function Episode() {
 	const [episodeContent, setEpisodeContent] = useState();
 	const [loading, setLoading] = useState(true);
 	const [errorred, setErrored] = useState(false);
-	const { episodeId } = useParams();
-	const { updateTitle } = useHeader();
-	if (!/^\d+$/.test(episodeId) || episodeId.length !== 2) {
-		return <NotFound />;
-	}
-	const episodeIdInt = parseInt(episodeId, 10);
 	const { toggleFlipAll, state } = useFlipAll();
+	const { updateTitle } = useHeader();
+	const { episodeId } = useParams();
+	const episodeIdInt = parseInt(episodeId, 10);
 
 	useEffect(() => {
-		const fetchDataAndSetTitle = async () => {
-			try {
-				const response = await fetch(
-					`http://localhost:3000/purely-relate/api/${episodeIdInt}`,
-				);
-				if (!response.ok) {
-					throw new Error("Episode Not found");
-				}
-				const data = await response.json();
-				setEpisodeContent(data);
-				setLoading(false);
-				updateTitle(`Purely Relate ${data.title}`);
-			} catch (error) {
-				console.log(error);
-				setErrored(true);
-			}
+		const fetchDataAndSetTitle = () => {
+			fetch(`http://localhost:5000/purely-relate/api/${episodeIdInt}`)
+				.then((resp) => {
+					if (!resp.ok) {
+						throw new Error(`Episode ${episodeId} not found`);
+					}
+					return resp.json();
+				})
+				.then((data) => {
+					setEpisodeContent(data);
+					setLoading(false);
+					updateTitle(`Purely Relate ${data.title}`);
+				})
+				.catch((err) => {
+					console.log(err);
+					setErrored(true);
+				});
 		};
-		fetchDataAndSetTitle();
+		if (!/^\d+$/.test(episodeId) || episodeId.length !== 2) {
+			setErrored(true);
+		} else {
+			fetchDataAndSetTitle();
+		}
 	}, []);
 
 	return (

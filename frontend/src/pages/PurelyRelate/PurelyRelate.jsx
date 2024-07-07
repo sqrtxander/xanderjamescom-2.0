@@ -1,7 +1,8 @@
-import { FlipAllProvider, useFlipAll, useHeader } from "@/contexts";
+import { FlipAllProvider, useHeader } from "@/contexts";
 import {
 	Button,
 	ButtonGroup,
+	Center,
 	Container,
 	Flex,
 	Heading,
@@ -11,44 +12,37 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { Outlet, Link as ReactRouterLink } from "react-router-dom";
-import {
-	PRR1Question,
-	PRR2Question,
-	PRR3Question,
-	PRR4Question,
-} from "@/components";
 import Example from "./Example";
 
-const PurelyRelate = () => {
+function PurelyRelate() {
 	const { updateTitle } = useHeader();
 	const [episodes, setEpisodes] = useState();
+	const [errored, setErrored] = useState(false);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const fetchDataAndSetTitle = async () => {
-			try {
-				const response = await fetch(
-					"http://localhost:3000/purely-relate/api/episodes",
-				);
-				if (!response.ok) {
-					throw new Error("No episodes found");
-				}
-				const data = await response.json();
-				setEpisodes(data);
-				setLoading(false);
-			} catch (error) {
-				console.log(error);
-				setErrored(true);
-			}
+		const fetchData = () => {
+			fetch("http://localhost:5000/purely-relate/api/episodes")
+				.then((resp) => {
+					if (!resp.ok) {
+						throw new Error("Error while accessing episodes");
+					}
+					return resp.json();
+				})
+				.then((data) => {
+					setEpisodes(data);
+					setLoading(false);
+				})
+				.catch((err) => {
+					console.log(err);
+					setErrored(true);
+				});
 		};
-		fetchDataAndSetTitle();
-	}, []);
-	useEffect(() => {
 		if (window.location.pathname.replace(/\/$/gim, "") === "/purely-relate") {
 			updateTitle("Purely Relate");
 		}
+		fetchData();
 	}, []);
-
 
 	return (
 		<FlipAllProvider initState={false}>
@@ -62,7 +56,11 @@ const PurelyRelate = () => {
 								Quiz show Only Connect
 							</Text>
 							<Heading as="h2">Episodes</Heading>
-							{loading ? (
+							{errored ? (
+								<Center>
+									<Text as="b">An error occurred while fetching episodes</Text>
+								</Center>
+							) : loading ? (
 								<Flex
 									width="100%"
 									height="100%"
@@ -97,6 +95,6 @@ const PurelyRelate = () => {
 			</Flex>
 		</FlipAllProvider>
 	);
-};
+}
 
 export default PurelyRelate;

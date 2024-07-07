@@ -1,6 +1,7 @@
 import {
 	Button,
 	ButtonGroup,
+	Center,
 	Container,
 	Grid,
 	HStack,
@@ -14,50 +15,46 @@ import PRSurfaceRelation from "./PRSurfaceRelation";
 import { useOrientation } from "react-use";
 import { useFlipAll } from "@/contexts";
 
+const initWall = (groups) => {
+	let start = [];
+	[...groups].map(
+		(group, i) =>
+			(start = [
+				...start,
+				...group.clues.map((clue) => ({
+					clue: clue,
+					groupId: i,
+					color: "blue",
+					disabled: false,
+					solved: false,
+					relation: group.relation,
+				})),
+			]),
+	);
+	shuffle(start, 0);
+	return start;
+};
+
+const shuffle = (wall, start) => {
+	for (let i = start; i < wall.length; i++) {
+		const newIdx = Math.floor(Math.random() * (wall.length - start)) + start;
+		const temp = wall[i];
+		wall[i] = wall[newIdx];
+		wall[newIdx] = temp;
+	}
+};
+
 function PRR3Question({ groups, glyph }) {
-	const { state } = useFlipAll();
-	const [autoSolving, setAutoSolving] = useState(false);
 	const [selected, setSelected] = useState([]);
 	const [groupsFound, setGroupsFound] = useState(0);
+	const [wall, setWall] = useState(initWall(groups));
+	const { state } = useFlipAll();
 	const groupColors = ["green", "yellow", "red", "teal"];
-
-	const initWall = () => {
-		let start = [];
-		groups.map(
-			(group, i) =>
-				(start = [
-					...start,
-					...group.clues.map((clue) => {
-						return {
-							clue: clue,
-							groupId: i,
-							color: "blue",
-							disabled: false,
-							solved: false,
-							relation: group.relation,
-						};
-					}),
-				]),
-		);
-		shuffle(start, 0);
-		return start;
-	};
-
-	const shuffle = (wall, start) => {
-		for (let i = start; i < wall.length; i++) {
-			const newIdx = Math.floor(Math.random() * (wall.length - start)) + start;
-			const temp = wall[i];
-			wall[i] = wall[newIdx];
-			wall[newIdx] = temp;
-		}
-	};
-
-	const [wall, setWall] = useState(initWall);
 
 	const resetWall = () => {
 		setGroupsFound(0);
 		setSelected([]);
-		setWall(initWall);
+		setWall(initWall(groups));
 	};
 
 	useEffect(() => {
@@ -79,7 +76,6 @@ function PRR3Question({ groups, glyph }) {
 					toSelect.push(i);
 				}
 			}
-			console.log(toSelect);
 			toSelect.map((idx, i) => {
 				let temp = newWall.splice(idx, 1);
 				temp[0].solved = true;
@@ -92,13 +88,6 @@ function PRR3Question({ groups, glyph }) {
 		setGroupsFound(found);
 		setSelected([]);
 	};
-	useEffect(() => {
-		if (autoSolving && groupsFound < 3) {
-			solveWall();
-		} else {
-			setAutoSolving(false);
-		}
-	}, [groupsFound]);
 
 	const onClick = (i) => {
 		// deselecting
@@ -219,45 +208,47 @@ function PRR3Question({ groups, glyph }) {
 					<Glyph>{glyphChar}</Glyph>
 					<Heading as="h3">{glyphWord}</Heading>
 				</HStack>
-				<ButtonGroup>
-					<Button
-						variant="outline"
-						size="lg"
-						colorScheme="blue"
-						isDisabled={groupsFound === 4}
-						onClick={solveWall}
-					>
-						Solve Wall
-					</Button>
-					<Button
-						variant="outline"
-						size="lg"
-						colorScheme="blue"
-						isDisabled={groupsFound === 4}
-						onClick={() => {
-							let newWall = [...wall];
-							shuffle(newWall, groupsFound * 4);
-							setWall(newWall);
-						}}
-					>
-						Shuffle Wall
-					</Button>
-					<Button
-						variant="outline"
-						size="lg"
-						colorScheme="blue"
-						isDisabled={groupsFound !== 4}
-						onClick={resetWall}
-					>
-						Reset Wall
-					</Button>
-				</ButtonGroup>
+				<Center w="100%">
+					<ButtonGroup>
+						<Button
+							variant="outline"
+							size="lg"
+							colorScheme="blue"
+							isDisabled={groupsFound === 4}
+							onClick={solveWall}
+						>
+							Solve Wall
+						</Button>
+						<Button
+							variant="outline"
+							size="lg"
+							colorScheme="blue"
+							isDisabled={groupsFound === 4}
+							onClick={() => {
+								let newWall = [...wall];
+								shuffle(newWall, groupsFound * 4);
+								setWall(newWall);
+							}}
+						>
+							Shuffle Wall
+						</Button>
+						<Button
+							variant="outline"
+							size="lg"
+							colorScheme="blue"
+							isDisabled={groupsFound !== 4}
+							onClick={resetWall}
+						>
+							Reset Wall
+						</Button>
+					</ButtonGroup>
+				</Center>
 				<Grid
 					w="100%"
 					templateRows={
 						groupsFound === 4 ? "repeat(4, 2fr 1fr)" : "repeat(4, 1fr)"
 					}
-					templateColumns={{ base: "repeat(4, 1fr)", md: "repeat(4, 1fr)" }}
+					templateColumns="repeat(4, 1fr)"
 					gap={3}
 					aspectRatio={type === "landscape-primary" ? 16 / 9 : 1}
 				>
