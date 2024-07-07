@@ -1,10 +1,10 @@
 from flask import Flask, g, jsonify
-from flask_cors import CORS
+# from flask_cors import CORS
 import sqlite3
 import json
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 
 
 def connect_db():
@@ -22,11 +22,6 @@ def get_db():
 def close_db(error):
     if hasattr(g, "sqlite_db"):
         g.sqlite3_db.close()
-
-
-@app.route('/')
-def index():
-    return '<h1>Hello, World!</h1>'
 
 
 @app.route("/purely-relate/api/episodes", methods=["GET"])
@@ -174,4 +169,4 @@ ORDER BY s.id, c.id
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=3000)
+    app.run(host="0.0.0.0")
