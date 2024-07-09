@@ -23,7 +23,7 @@ function Crossword() {
 				<NotFound />
 			) : (
 				<iframe
-					title={`Crossword #${crosswordId}`}
+					title={crossword.title}
 					src={`/crosswords/backend/${crosswordId}.html`}
 					width="100%"
 					height="100%"
