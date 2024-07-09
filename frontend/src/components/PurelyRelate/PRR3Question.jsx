@@ -212,7 +212,7 @@ function PRR3Question({ groups, glyph }) {
 					<ButtonGroup>
 						<Button
 							variant="outline"
-							size="lg"
+							size={{ base: "md", md: "lg" }}
 							colorScheme="blue"
 							isDisabled={groupsFound === 4}
 							onClick={solveWall}
@@ -221,7 +221,7 @@ function PRR3Question({ groups, glyph }) {
 						</Button>
 						<Button
 							variant="outline"
-							size="lg"
+							size={{ base: "md", md: "lg" }}
 							colorScheme="blue"
 							isDisabled={groupsFound === 4}
 							onClick={() => {
@@ -234,7 +234,7 @@ function PRR3Question({ groups, glyph }) {
 						</Button>
 						<Button
 							variant="outline"
-							size="lg"
+							size={{ base: "md", md: "lg" }}
 							colorScheme="blue"
 							isDisabled={groupsFound !== 4}
 							onClick={resetWall}
