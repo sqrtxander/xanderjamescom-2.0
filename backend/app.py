@@ -1,10 +1,10 @@
 from flask import Flask, g, jsonify
-from flask_cors import CORS
+# from flask_cors import CORS
 import sqlite3
 import json
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 
 
 def connect_db():
@@ -24,7 +24,7 @@ def close_db(error):
         g.sqlite3_db.close()
 
 
-@app.route("/purely-relate/api/episodes", methods=["GET"])
+@app.route("/purely-relate/episodes", methods=["GET"])
 def getEpisodes():
     db = get_db()
     sql = "SELECT id, title FROM matches"
@@ -36,7 +36,7 @@ def getEpisodes():
     return jsonify(episodes)
 
 
-@app.route("/purely-relate/api/<int:episode_id>", methods=["GET"])
+@app.route("/purely-relate/<int:episode_id>", methods=["GET"])
 def getEpisodeContents(episode_id):
     db = get_db()
     result = {}
