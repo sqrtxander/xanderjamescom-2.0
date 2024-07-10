@@ -22,7 +22,7 @@ function PurelyRelate() {
 
 	useEffect(() => {
 		const fetchData = () => {
-			fetch("http://localhost:5000/purely-relate/api/episodes")
+			fetch("https://api.xanderjames.com/purely-relate/episodes")
 				.then((resp) => {
 					if (!resp.ok) {
 						throw new Error("Error while accessing episodes");

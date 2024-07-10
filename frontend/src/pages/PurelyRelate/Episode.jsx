@@ -25,7 +25,7 @@ function Episode() {
 
 	useEffect(() => {
 		const fetchDataAndSetTitle = () => {
-			fetch(`http://localhost:5000/purely-relate/api/${episodeIdInt}`)
+			fetch(`https://api.xanderjames.com/purely-relate/${episodeIdInt}`)
 				.then((resp) => {
 					if (!resp.ok) {
 						throw new Error(`Episode ${episodeId} not found`);
