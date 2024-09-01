@@ -217,7 +217,7 @@ function PRR3Question({ groups, glyph }) {
 							isDisabled={groupsFound === 4}
 							onClick={solveWall}
 						>
-							Solve Wall
+							Solve Surface
 						</Button>
 						<Button
 							variant="outline"
@@ -230,7 +230,7 @@ function PRR3Question({ groups, glyph }) {
 								setWall(newWall);
 							}}
 						>
-							Shuffle Wall
+							Shuffle Surface
 						</Button>
 						<Button
 							variant="outline"
@@ -239,7 +239,7 @@ function PRR3Question({ groups, glyph }) {
 							isDisabled={groupsFound !== 4}
 							onClick={resetWall}
 						>
-							Reset Wall
+							Reset Surface
 						</Button>
 					</ButtonGroup>
 				</Center>

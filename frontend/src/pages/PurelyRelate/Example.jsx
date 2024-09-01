@@ -61,7 +61,7 @@ function Example() {
 			<Heading as="h2">Round 3: Relating Surfaces</Heading>
 			<Text fontSize="lg">
 				There are 16 clues and 4 related groups of 4. Select clues to group them
-				together. After grouping all the clues, or pressing the "Solve surface"
+				together. After grouping all the clues, or pressing the "Solve Surface"
 				button, you say the relations of the groups similarly to round 1.
 			</Text>
 			<PRR3Question
