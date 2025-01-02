@@ -22,10 +22,11 @@ function Episode() {
 	const { updateTitle } = useHeader();
 	const { episodeId } = useParams();
 	const episodeIdInt = parseInt(episodeId, 10);
+	const apiURL = import.meta.env.VITE_API_URL;
 
 	useEffect(() => {
 		const fetchDataAndSetTitle = () => {
-			fetch(`https://api.xanderjames.com/purely-relate/${episodeIdInt}`)
+			fetch(`${apiURL}/purely-relate/${episodeIdInt}`)
 				.then((resp) => {
 					if (!resp.ok) {
 						throw new Error(`Episode ${episodeId} not found`);

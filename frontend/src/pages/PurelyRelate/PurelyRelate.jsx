@@ -19,10 +19,11 @@ function PurelyRelate() {
 	const [episodes, setEpisodes] = useState();
 	const [errored, setErrored] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const apiURL = import.meta.env.VITE_API_URL;
 
 	useEffect(() => {
 		const fetchData = () => {
-			fetch("https://api.xanderjames.com/purely-relate/episodes")
+			fetch(`${apiURL}/purely-relate/episodes`)
 				.then((resp) => {
 					if (!resp.ok) {
 						throw new Error("Error while accessing episodes");
