@@ -38,7 +38,7 @@ function Example() {
 				you get.
 			</Text>
 			<PRR1Question
-				glyph="jackal"
+				glyph="O"
 				backs={["Jade", "Mint", "Chartreuse", "Emerald"]}
 				relation="Shades of green"
 			/>
@@ -49,7 +49,7 @@ function Example() {
 				progression.
 			</Text>
 			<PRR2Question
-				glyph="lotus"
+				glyph="I"
 				backs={[
 					"US Department of Defence building",
 					"Honeycomb cell",
@@ -65,7 +65,7 @@ function Example() {
 				button, you say the relations of the groups similarly to round 1.
 			</Text>
 			<PRR3Question
-				glyph="pots"
+				glyph="L"
 				groups={[
 					{
 						clues: ["Non", "Nei", "Nein", "Nee"],
