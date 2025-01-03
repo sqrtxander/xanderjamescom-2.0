@@ -164,15 +164,6 @@ function PRR3Question({ groups, glyph }) {
 		}
 	}, [groupsFound]);
 
-	const glyphs = {
-		jackal: { glyphChar: "𓃥", glyphWord: "Jackal" },
-		pots: { glyphChar: "𓏍", glyphWord: "Three Pots" },
-		lotus: { glyphChar: "𓆸", glyphWord: "Lotus" },
-		vulture: { glyphChar: "𓅐", glyphWord: "Vulture" },
-		man: { glyphChar: "𓀀", glyphWord: "Seated Man" },
-		sickle: { glyphChar: "𓌴", glyphWord: "Sickle" },
-	};
-	const { glyphChar, glyphWord } = glyphs[glyph];
 	const { type } = useOrientation();
 
 	const renderWall = () => {
@@ -205,8 +196,8 @@ function PRR3Question({ groups, glyph }) {
 		<Container maxW="100%" padding={0}>
 			<VStack w="100%" gap={5} alignItems="flex-start" paddingBottom={20}>
 				<HStack gap={5}>
-					<Glyph>{glyphChar}</Glyph>
-					<Heading as="h3">{glyphWord}</Heading>
+					<Glyph glyph={glyph} />
+					<Heading as="h3">{glyph}</Heading>
 				</HStack>
 				<Center w="100%">
 					<ButtonGroup>

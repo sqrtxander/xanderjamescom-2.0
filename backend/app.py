@@ -51,17 +51,17 @@ def getEpisodeContents(episode_id):
     # RELATIONS
     sql = """\
 SELECT glyph, clues, connection, explanation
-FROM connequences 
-WHERE kind = 'connection' AND match = ? 
+FROM connequences
+WHERE kind = 'connection' AND match = ?
 ORDER BY (
     CASE glyph
-        WHEN 'jackal' THEN 1
-        WHEN 'pots' THEN 2
-        WHEN 'lotus' THEN 3
-        WHEN 'vulture' THEN 4
-        WHEN 'man' THEN 5
-        WHEN 'sickle' THEN 6
-        ELSE 0 
+        WHEN 'O' THEN 1
+        WHEN 'L' THEN 2
+        WHEN 'I' THEN 3
+        WHEN 'T' THEN 4
+        WHEN 'J' THEN 5
+        WHEN 'Z' THEN 6
+        ELSE 0
     END
 )
 """
@@ -75,17 +75,17 @@ ORDER BY (
     # PROGRESSIONS
     sql = """\
 SELECT glyph, clues, connection, explanation
-FROM connequences 
-WHERE kind = 'sequence' AND match = ? 
+FROM connequences
+WHERE kind = 'sequence' AND match = ?
 ORDER BY (
     CASE glyph
-        WHEN 'jackal' THEN 1
-        WHEN 'pots' THEN 2
-        WHEN 'lotus' THEN 3
-        WHEN 'vulture' THEN 4
-        WHEN 'man' THEN 5
-        WHEN 'sickle' THEN 6
-        ELSE 0 
+        WHEN 'O' THEN 1
+        WHEN 'L' THEN 2
+        WHEN 'I' THEN 3
+        WHEN 'T' THEN 4
+        WHEN 'J' THEN 5
+        WHEN 'Z' THEN 6
+        ELSE 0
     END
 )
 """
@@ -117,13 +117,13 @@ ON g.wall = w.id
 WHERE w.match = ? AND w.glyph = ?
 ORDER BY (
     CASE w.glyph
-        WHEN 'pots' THEN 2
-        WHEN 'man' THEN 5
-        WHEN 'lion' THEN 2
-        WHEN 'water' THEN 5
-        WHEN 'alpha' THEN 2
-        WHEN 'beta' THEN 5
-        ELSE 0 
+        WHEN 'O' THEN 1
+        WHEN 'L' THEN 2
+        WHEN 'I' THEN 3
+        WHEN 'T' THEN 4
+        WHEN 'J' THEN 5
+        WHEN 'Z' THEN 6
+        ELSE 0
     END
 ),
     g.id;
@@ -151,7 +151,7 @@ ORDER BY id
         del round["id"]
         sql = """\
 SELECT c.clue, c.solution
-FROM vowel_clues c 
+FROM vowel_clues c
 INNER JOIN vowel_sets s
 ON c.[set] = s.id
 WHERE s.match = ? AND s.id = ?

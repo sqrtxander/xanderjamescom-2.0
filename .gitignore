@@ -22,3 +22,7 @@ frontend/*.ntvs*
 frontend/*.njsproj
 frontend/*.sln
 frontend/*.sw?
+
+# .env files
+frontend/.env
+frontend/.env.*

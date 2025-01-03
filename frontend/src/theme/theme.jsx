@@ -1,8 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
 import { drawerTheme as Drawer } from "./drawer";
-import { buttonTheme as Button} from "./button";
-import "@fontsource/noto-sans-egyptian-hieroglyphs";
+import { buttonTheme as Button } from "./button";
 
 const theme = extendTheme({
 	config: {
@@ -18,9 +17,6 @@ const theme = extendTheme({
 			100: "#ffffff",
 			200: "#e8e8e8",
 		},
-	},
-	fonts: {
-		glyph: `"Noto Sans Egyptian Hieroglyphs", "sans-serif"`,
 	},
 	styles: {
 		global: (props) => ({
