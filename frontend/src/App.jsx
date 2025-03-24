@@ -9,6 +9,8 @@ import { Box, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 import CrosswordsHome from "./pages/Crosswords/Crosswords";
 import Crossword from "./pages/Crosswords/Crossword";
+import ChainLinks from "./pages/ChainLinks/ChainLinks";
+import CLPuzzle from "./pages/ChainLinks/CLPuzzle";
 
 function App() {
 	const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -26,6 +28,9 @@ function App() {
 						</Route>
 						<Route path="/crosswords" element={<CrosswordsHome />}>
 							<Route path=":crosswordId" element={<Crossword />} />
+						</Route>
+						<Route path="/chain-links" element={<ChainLinks />}>
+							<Route path="puzzle/:puzzleId" element={<CLPuzzle />} />
 						</Route>
 						<Route path="*" element={<NotFound />} />
 					</Routes>

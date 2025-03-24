@@ -3,18 +3,21 @@ from flask_cors import CORS
 import sqlite3
 import json
 
+PR_DB_PATH = "./purely-relate.db"
+CL_DB_PATH = "./chain-links.db"
+
 app = Flask(__name__)
 CORS(app)
 
 
-def connect_db():
-    sql = sqlite3.connect("./purely-relate.db")
+def connect_db(path: str):
+    sql = sqlite3.connect(path)
     return sql
 
 
-def get_db():
+def get_db(path: str):
     if not hasattr(g, "sqlite3"):
-        g.sqlite3_db = connect_db()
+        g.sqlite3_db = connect_db(path)
     return g.sqlite3_db
 
 
@@ -25,8 +28,8 @@ def close_db(error):
 
 
 @app.route("/purely-relate/episodes", methods=["GET"])
-def getEpisodes():
-    db = get_db()
+def getPREpisodes():
+    db = get_db(PR_DB_PATH)
     sql = "SELECT id, title FROM matches"
     cursor = db.cursor().execute(sql)
     episodes = cursor.fetchall()
@@ -37,8 +40,8 @@ def getEpisodes():
 
 
 @app.route("/purely-relate/<int:episode_id>", methods=["GET"])
-def getEpisodeContents(episode_id):
-    db = get_db()
+def getPREpisodeContents(episode_id):
+    db = get_db(PR_DB_PATH)
     result = {}
     sql = "SELECT * FROM matches WHERE id = ? LIMIT 1"
     cursor = db.cursor().execute(sql, (episode_id,))
@@ -164,6 +167,58 @@ ORDER BY s.id, c.id
         round |= {"questions": group}
 
     result |= {"consonants": consonants}
+
+    return jsonify(result)
+
+
+@app.route("/chain-links/puzzles", methods=["GET"])
+def getCLPuzzles():
+    db = get_db(CL_DB_PATH)
+    sql = "SELECT id FROM puzzles"
+    cursor = db.cursor().execute(sql)
+    episodes = cursor.fetchall()
+    if not episodes:
+        return jsonify({"message": "Error, no episodes"}), 404
+    episodes = [{"id": a} for a in episodes]
+    return jsonify(episodes)
+
+
+@app.route("/chain-links/<int:puzzle_id>", methods=["GET"])
+def getCLPuzzleContents(puzzle_id):
+    db = get_db(CL_DB_PATH)
+    result = {}
+    sql = "SELECT id FROM puzzles where id = ? LIMIT 1"
+    cursor = db.cursor().execute(sql, (puzzle_id,))
+    episode = cursor.fetchall()
+    if not episode:
+        return jsonify({"message": "Error, episode doesn't exist"}), 404
+
+    # chains
+    sql = """\
+SELECT left, middle, right
+FROM chains
+WHERE puzzle = ?
+ORDER BY qnum
+"""
+    cursor = db.cursor().execute(sql, (puzzle_id,))
+    chains = cursor.fetchall()
+    chains = [{"left": a, "middle": b, "right": c} for a, b, c in chains]
+
+    result |= {"chains": chains}
+
+    # connection
+
+    sql = """\
+SELECT connection
+FROM connections
+WHERE puzzle = ?
+LIMIT 1
+"""
+
+    cursor = db.cursor().execute(sql, (puzzle_id,))
+    connection = cursor.fetchone()[0]
+
+    result |= {"connection": connection}
 
     return jsonify(result)
 
