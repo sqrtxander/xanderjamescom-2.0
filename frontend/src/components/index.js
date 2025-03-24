@@ -4,3 +4,5 @@ export { default as PRR1Question } from "./PurelyRelate/PRR1Question";
 export { default as PRR2Question } from "./PurelyRelate/PRR2Question";
 export { default as PRR3Question } from "./PurelyRelate/PRR3Question";
 export { default as PRR4Question } from "./PurelyRelate/PRR4Question";
+export { default as CLChain } from "./ChainLinks/CLChain";
+export { default as CLConnection } from "./ChainLinks/CLConnection";

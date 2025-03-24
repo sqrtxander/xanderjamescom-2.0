@@ -18,6 +18,9 @@ const SidebarContent = ({ onClick }) => (
 		<Button onClick={onClick} w="100%" as={ReactRouterLink} to="/purely-relate">
 			Purely Relate
 		</Button>
+		<Button onClick={onClick} w="100%" as={ReactRouterLink} to="/chain-links">
+			Chain Links
+		</Button>
 		<Button onClick={onClick} w="100%" as={ReactRouterLink} to="/crosswords">
 			Cryptic Crosswords
 		</Button>
