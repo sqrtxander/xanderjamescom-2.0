@@ -15,7 +15,7 @@ const HomePage = () => {
 	}, []);
 	return (
 		<Flex
-			w={{ base: "100vw", md: "80vw" }}
+			w={{ base: "100%", md: "80%" }}
 			h="100%"
 			p={5}
 			justifyContent="left"

@@ -6,14 +6,12 @@ import {
 	Text,
 	useColorModeValue,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useCheckAll, useFlipAll } from "@/contexts";
 
 function CLMiddle({ value, setUserValue, disabled }) {
 	const flexHeight = `${Text.fontSize} * ${Text.lineHeight}`;
 	return (
 		<GridItem w="100%">
-			<AspectRatio width="100%" ratio="1.75">
+			<AspectRatio width="100%" ratio={{ base: 4, md: 2 }}>
 				<Flex
 					bg={useColorModeValue("blue.500", "blue.200")}
 					w="100%"

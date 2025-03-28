@@ -4,6 +4,7 @@ import {
 	Flex,
 	Grid,
 	HStack,
+	useBreakpointValue,
 	VStack,
 } from "@chakra-ui/react";
 import CLMiddle from "./CLMiddle";
@@ -25,6 +26,7 @@ function CLChain({ left, middle, right }) {
 	const [userValue, setUserValue] = useState("");
 	const { state } = useFlipAll();
 	const { checkState } = useCheckAll();
+	const isSmallScreen = useBreakpointValue({ base: true, md: false });
 
 	const isCorrect = () => {
 		return (
@@ -44,75 +46,137 @@ function CLChain({ left, middle, right }) {
 
 	return (
 		<Container maxW={{ base: "100%", md: "80%" }} padding={0}>
-			<HStack width="100%" spacing={4} alignItems="flex-start">
-				<VStack
-					width="20%"
-					alignSelf="stretch"
-					justifyContent="center"
-					alignItems="center"
-				>
-					<Button
-						leftIcon={
-							isFlipped ? (
-								<IoEyeOutline size="1.5em" />
-							) : (
-								<IoEyeOffOutline size="1.5em" />
-							)
-						}
-						variant="outline"
-						colorScheme="blue"
-						width="80%"
-						onClick={() => setFlipped(!isFlipped)}
+			{isSmallScreen ? (
+				<VStack width="100%" spacing={3}>
+					<HStack width="100%" justify="space-between">
+						<Button
+							leftIcon={
+								isFlipped ? (
+									<IoEyeOutline size="1.5em" />
+								) : (
+									<IoEyeOffOutline size="1.5em" />
+								)
+							}
+							variant="outline"
+							colorScheme="blue"
+							width="45%"
+							onClick={() => setFlipped(!isFlipped)}
+						>
+							Reveal
+						</Button>
+						<Button
+							leftIcon={
+								isChecked ? (
+									<MdOutlineCheckBox size="1.5em" />
+								) : (
+									<MdOutlineCheckBoxOutlineBlank size="1.5em" />
+								)
+							}
+							variant="outline"
+							colorScheme="blue"
+							width="45%"
+							onClick={() => setChecked(!isChecked)}
+						>
+							Check
+						</Button>
+					</HStack>
+					<Grid
+						width="100%"
+						templateRows="repeat(3, 1fr)"
+						templateColumns="1fr"
+						gap={3}
 					>
-						Reveal
-					</Button>
-					<Button
-						leftIcon={
-							isChecked ? (
-								<MdOutlineCheckBox size="1.5em" />
+						<CLSide front={left} />
+						<CLMiddle
+							value={isFlipped ? middle : userValue}
+							setUserValue={setUserValue}
+							disabled={isFlipped || isChecked}
+						/>
+						<CLSide front={right} />
+					</Grid>
+					<Flex justify="center" align="center">
+						{isChecked ? (
+							isCorrect() ? (
+								<MdCheck size="1.5em" />
 							) : (
-								<MdOutlineCheckBoxOutlineBlank size="1.5em" />
+								<MdClose size="1.5em" />
 							)
-						}
-						variant="outline"
-						colorScheme="blue"
-						width="80%"
-						onClick={() => setChecked(!isChecked)}
-					>
-						Check
-					</Button>
-				</VStack>
-				<Grid
-					width="80%"
-					templateRows="1fr"
-					templateColumns="repeat(3, 1fr)"
-					gap={3}
-				>
-					<CLSide front={left} />
-					<CLMiddle
-						value={isFlipped ? middle : userValue}
-						setUserValue={setUserValue}
-						disabled={isFlipped || isChecked}
-					/>
-					<CLSide front={right} />
-				</Grid>
-				<Flex
-					width="20%"
-					alignSelf="stretch"
-					justifyContent="center"
-					alignItems="center"
-				>
-					{isChecked ? (
-						isCorrect() ? (
-							<MdCheck size="1.5em" />
 						) : (
-							<MdClose size="1.5em" />
-						)
-					) : (
-						<MdQuestionMark size="1.5em" />
-					)}
-				</Flex>
-			</HStack>
+							<MdQuestionMark size="1.5em" />
+						)}
+					</Flex>
+				</VStack>
+			) : (
+				<HStack width="100%" spacing={4} alignItems="flex-start">
+					<VStack
+						width="20%"
+						alignSelf="stretch"
+						justifyContent="center"
+						alignItems="center"
+					>
+						<Button
+							leftIcon={
+								isFlipped ? (
+									<IoEyeOutline size="1.5em" />
+								) : (
+									<IoEyeOffOutline size="1.5em" />
+								)
+							}
+							variant="outline"
+							colorScheme="blue"
+							width="80%"
+							onClick={() => setFlipped(!isFlipped)}
+						>
+							Reveal
+						</Button>
+						<Button
+							leftIcon={
+								isChecked ? (
+									<MdOutlineCheckBox size="1.5em" />
+								) : (
+									<MdOutlineCheckBoxOutlineBlank size="1.5em" />
+								)
+							}
+							variant="outline"
+							colorScheme="blue"
+							width="80%"
+							onClick={() => setChecked(!isChecked)}
+						>
+							Check
+						</Button>
+					</VStack>
+					<Grid
+						width="80%"
+						templateRows="1fr"
+						templateColumns="repeat(3, 1fr)"
+						gap={3}
+					>
+						<CLSide front={left} />
+						<CLMiddle
+							value={isFlipped ? middle : userValue}
+							setUserValue={setUserValue}
+							disabled={isFlipped || isChecked}
+						/>
+						<CLSide front={right} />
+					</Grid>
+					<Flex
+						width="20%"
+						alignSelf="stretch"
+						justifyContent="center"
+						alignItems="center"
+					>
+						{isChecked ? (
+							isCorrect() ? (
+								<MdCheck size="1.5em" />
+							) : (
+								<MdClose size="1.5em" />
+							)
+						) : (
+							<MdQuestionMark size="1.5em" />
+						)}
+					</Flex>
+				</HStack>
+			)}
 		</Container>
 	);
 }

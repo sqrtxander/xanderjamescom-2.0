@@ -1,12 +1,16 @@
 import {
+	Box,
 	Button,
+	Divider,
 	Flex,
 	Heading,
 	HStack,
 	Spinner,
+	useBreakpointValue,
 	VStack,
 } from "@chakra-ui/react";
 
+import { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { useCheckAll, useFlipAll, useHeader } from "@/contexts";
 import { useParams } from "react-router-dom";
@@ -30,6 +34,7 @@ function Episode() {
 	const { puzzleId } = useParams();
 	const puzzleIdInt = parseInt(puzzleId, 10);
 	const apiURL = import.meta.env.VITE_API_URL;
+	const isSmallScreen = useBreakpointValue({ base: true, md: false });
 
 	useEffect(() => {
 		const fetchDataAndSetTitle = () => {
@@ -62,12 +67,7 @@ function Episode() {
 			{errorred ? (
 				<NotFound />
 			) : loading ? (
-				<Flex
-					width="100%"
-					height="100%"
-					justifyContent="center"
-					alignItems="center"
-				>
+				<Flex width="100%" height="100%" justifyContent="center">
 					<Spinner size="xl" />
 				</Flex>
 			) : (
@@ -110,21 +110,23 @@ function Episode() {
 								Check all
 							</Button>
 						</HStack>
+						<Divider width="100%" borderWidth="4px" borderRadius="4px" />
 						{episodeContent.chains.map((chain, i) => (
-							<CLChain
-								key={i}
-								left={chain.left}
-								middle={chain.middle}
-								right={chain.right}
-							/>
+							<Fragment key={i}>
+								<CLChain
+									left={chain.left}
+									middle={chain.middle}
+									right={chain.right}
+								/>
+								<Divider width="100%" borderWidth="4px" borderRadius="4px" />
+							</Fragment>
 						))}
-						<Flex width="100%" justifyContent="center">
-							<CLConnection
-								front="Reveal connection"
-								back={episodeContent.connection}
-								width="80%"
-							/>
-						</Flex>
+						<CLConnection
+							front="Reveal connection"
+							back={episodeContent.connection}
+							width="100%"
+						/>
+						<Divider width="100%" borderWidth="4px" borderRadius="4px" />
 					</VStack>
 				</Flex>
 			)}

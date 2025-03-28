@@ -47,7 +47,7 @@ function PurelyRelate() {
 
 	return (
 		<FlipAllProvider initState={false}>
-			<Flex w={{ base: "100vw", md: "80vw" }}>
+			<Flex w={{ base: "100%", md: "80%" }} justifyContent="center">
 				<Container maxWidth="100%" p={4}>
 					{window.location.pathname.replace(/\/$/gim, "") ===
 					"/purely-relate" ? (

@@ -214,19 +214,6 @@ function PRR3Question({ groups, glyph }) {
 							variant="outline"
 							size={{ base: "md", md: "lg" }}
 							colorScheme="blue"
-							isDisabled={groupsFound === 4}
-							onClick={() => {
-								let newWall = [...wall];
-								shuffle(newWall, groupsFound * 4);
-								setWall(newWall);
-							}}
-						>
-							Shuffle Surface
-						</Button>
-						<Button
-							variant="outline"
-							size={{ base: "md", md: "lg" }}
-							colorScheme="blue"
 							isDisabled={groupsFound !== 4}
 							onClick={resetWall}
 						>
