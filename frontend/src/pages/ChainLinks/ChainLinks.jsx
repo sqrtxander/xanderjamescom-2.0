@@ -1,12 +1,12 @@
 import { CheckAllProvider, FlipAllProvider, useHeader } from "@/contexts";
 import {
 	Button,
-	ButtonGroup,
 	Center,
 	Container,
 	Flex,
 	Heading,
 	Spinner,
+	Stack,
 	Text,
 	VStack,
 } from "@chakra-ui/react";
@@ -73,7 +73,11 @@ function ChainLinks() {
 										<Spinner size="xl" />
 									</Flex>
 								) : (
-									<ButtonGroup>
+									<Stack
+										direction={{ base: "column", md: "row" }}
+										spacing={4}
+										width="100%"
+									>
 										{episodes.map((ep, i) => (
 											<Button
 												key={i}
@@ -86,9 +90,8 @@ function ChainLinks() {
 												{"Puzzle " + ep.id}
 											</Button>
 										))}
-									</ButtonGroup>
+									</Stack>
 								)}
-								<ButtonGroup></ButtonGroup>
 								<CLExample />
 							</VStack>
 						) : (

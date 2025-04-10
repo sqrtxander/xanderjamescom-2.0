@@ -1,12 +1,12 @@
 import { FlipAllProvider, useHeader } from "@/contexts";
 import {
 	Button,
-	ButtonGroup,
 	Center,
 	Container,
 	Flex,
 	Heading,
 	Spinner,
+	Stack,
 	Text,
 	VStack,
 } from "@chakra-ui/react";
@@ -71,7 +71,11 @@ function PurelyRelate() {
 									<Spinner size="xl" />
 								</Flex>
 							) : (
-								<ButtonGroup>
+								<Stack
+									direction={{ base: "column", md: "row" }}
+									spacing={4}
+									width="100%"
+								>
 									{episodes.map((ep, i) => (
 										<Button
 											key={i}
@@ -84,9 +88,8 @@ function PurelyRelate() {
 											{ep.title}
 										</Button>
 									))}
-								</ButtonGroup>
+								</Stack>
 							)}
-							<ButtonGroup></ButtonGroup>
 							<Example />
 						</VStack>
 					) : (

@@ -9,7 +9,7 @@ function CLExample() {
 		updateTitle("Chain Links");
 	}, []);
 	return (
-		<Flex w={{ base: "100%", md: "80%" }} justifyContent="center">
+		<Flex w="100%" justifyContent="center">
 			<VStack maxWidth="100%" spacing={4} alignItems="flex-start">
 				<Heading as="h1">How to Play</Heading>
 				<Text fontSize="lg" wordBreak="break-word">
