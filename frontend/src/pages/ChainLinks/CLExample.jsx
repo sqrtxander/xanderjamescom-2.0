@@ -17,8 +17,8 @@ function CLExample() {
 					with a blank space between them. To solve a word chain, you must find
 					a word that can replace the blank such that every pair of consecutive
 					words forms a common phrase. For example, the pairs of consecutive
-					words in <i>rock paper scissors</i> are <i>rock paper</i>, and{" "}
-					<i>paper scissors</i>.
+					words in <em>rock paper scissors</em> are <em>rock paper</em>, and{" "}
+					<em>paper scissors</em>.
 				</Text>
 				<Text fontSize="lg" wordBreak="break-word">
 					After successfully solving all eight word chains, you should hopefully

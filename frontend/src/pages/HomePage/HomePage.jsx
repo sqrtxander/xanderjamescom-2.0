@@ -71,9 +71,9 @@ const HomePage = () => {
 				<Text fontSize="xl" textAlign="left">
 					My name is Xander.
 					<br />I am an undergraduate student studying mathematics and IT. I use
-					Ubuntu 24.04 LTS as my main operating system and Neovim *
-					<i>by the way</i>* as my main text editor. I enjoy programming (when I
-					have ideas), and can solve a Rubik's Cube blindfolded.
+					Neovim as my main text editor on Arch Linux (<em>by the way</em>). I
+					enjoy programming (when I have ideas), and can solve a Rubik's Cube
+					blindfolded.
 					<br />
 					<br />I love both participating in and setting trivia, especially that
 					where answers are connected.
